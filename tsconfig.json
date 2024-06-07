@@ -3,7 +3,7 @@
     "lib": ["ES2023"],
     "target": "ES2022",
     "module": "Node16",
-    "outDir": "./build",
+    "outDir": "./dist",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true
