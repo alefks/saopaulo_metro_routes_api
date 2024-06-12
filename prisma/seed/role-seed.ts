@@ -2,43 +2,33 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function executeRoleSeed() {
-  const adminRoleSeed = await prisma.role.create({
-    data: {
-      name: "Admin",
-      description:
-        "Manages the entire subway system, oversees operations, and ensures compliance with policies.",
-    },
-  });
-
-  const passengerRoleSeed = await prisma.role.create({
-    data: {
-      name: "Passenger",
-      description:
-        "Uses the subway for transportation, plans journeys, buys tickets, and receives service updates.",
-    },
-  });
-
-  const trainOperatorRoleSeed = await prisma.role.create({
-    data: {
-      name: "Train Operator",
-      description:
-        "Operates trains, maintains schedules, ensures safety, and communicates with the control center.",
-    },
-  });
-
-  const ticketBoothAttendantRoleSeed = await prisma.role.create({
-    data: {
-      name: "Ticket Booth Attendant",
-      description:
-        "Assists passengers with ticket purchases and travel information, and handles transactions.",
-    },
-  });
-
-  const mainentanceTechnicianRoleSeed = await prisma.role.create({
-    data: {
-      name: "Mainentance Technician",
-      description:
-        "Inspects, repairs, and maintains subway infrastructure to ensure safety and reliability.",
-    },
+  const roleSeeds = await prisma.role.createMany({
+    data: [
+      {
+        name: "Admin",
+        description:
+          "Manages the entire subway system, oversees operations, and ensures compliance with policies.",
+      },
+      {
+        name: "Passenger",
+        description:
+          "Uses the subway for transportation, plans journeys, buys tickets, and receives service updates.",
+      },
+      {
+        name: "Train Operator",
+        description:
+          "Operates trains, maintains schedules, ensures safety, and communicates with the control center.",
+      },
+      {
+        name: "Ticket Booth Attendant",
+        description:
+          "Assists passengers with ticket purchases and travel information, and handles transactions.",
+      },
+      {
+        name: "Mainentance Technician",
+        description:
+          "Inspects, repairs, and maintains subway infrastructure to ensure safety and reliability.",
+      },
+    ],
   });
 }
