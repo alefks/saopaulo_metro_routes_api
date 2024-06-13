@@ -1,4 +1,4 @@
-name: protect-migrations
+name: Protect Migrations
 
 on:
   pull_request:
@@ -23,12 +23,11 @@ jobs:
         run: |
           BASE_SHA=$(git rev-parse origin/${{ github.event.pull_request.base.ref }})
           HEAD_SHA=$(git rev-parse HEAD)
-          git diff --name-status $BASE_SHA $HEAD_SHA | grep "^D" | grep "prisma/migrations/"
-        continue-on-error: true
-        id: check_deleted_migrations
-
-      - name: Fail if migrations are deleted
-        if: steps.check_deleted_migrations.outcome == 'success'
-        run: |
-          echo "Migration files have been deleted, which is not allowed."
-          exit 1
+          DELETED_FILES=$(git diff --name-status $BASE_SHA $HEAD_SHA | grep "^D" | grep "prisma/migrations/" || true)
+          if [ -n "$DELETED_FILES" ]; then
+            echo "Migration files have been deleted, which is not allowed:"
+            echo "$DELETED_FILES"
+            exit 1
+          else
+            echo "No migration files were deleted."
+          fi
