@@ -2,10 +2,8 @@ name: protect-migrations
 
 on:
   pull_request:
-    
     branches:
       - "feature/protect-migrations"
-
     paths:
       - "prisma/migrations/**"
 
@@ -15,10 +13,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
 
       - name: Check for deleted migration files
         run: |
-          git diff --name-status ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep "^D" | grep "prisma/migrations/"
+          BASE_SHA=$(git rev-parse origin/${{ github.event.pull_request.base.ref }})
+          HEAD_SHA=$(git rev-parse HEAD)
+          git diff --name-status $BASE_SHA $HEAD_SHA | grep "^D" | grep "prisma/migrations/"
         continue-on-error: true
         id: check_deleted_migrations
 
