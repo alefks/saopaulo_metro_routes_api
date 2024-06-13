@@ -1,4 +1,4 @@
-name: Protect Migrations
+name: Migrations Protection
 
 on:
   pull_request:
