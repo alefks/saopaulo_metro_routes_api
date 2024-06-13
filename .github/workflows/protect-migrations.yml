@@ -2,6 +2,10 @@ name: protect-migrations
 
 on:
   pull_request:
+    
+    branches:
+      - "feature/protect-migrations"
+
     paths:
       - "prisma/migrations/**"
 
