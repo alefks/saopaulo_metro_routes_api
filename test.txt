@@ -1,0 +1,1 @@
+This is a PR test without deleting any migration. Let's see if our github action workflow is working properly.
