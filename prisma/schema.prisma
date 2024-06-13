@@ -18,3 +18,9 @@ model Role {
   name String
   description String
 }
+
+model TestMigrationProtection {
+  id String @id @default(uuid())
+  name String
+  description String
+}
