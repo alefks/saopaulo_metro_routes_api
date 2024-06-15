@@ -3,13 +3,14 @@ name: Migrations Protection
 on:
   pull_request:
     branches:
-      - "feature/protect-migrations"
+      - main
+      - develop
     paths:
       - "prisma/migrations/**"
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v2
