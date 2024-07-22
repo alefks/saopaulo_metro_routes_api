@@ -2,10 +2,12 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 import { executeRoleSeed } from "./role-seed";
 import { executeManufacturerSeed } from "./manufacturer-seed";
+import { executeUserSeed } from "./user-seed";
 
 async function main() {
-  executeRoleSeed();
-  executeManufacturerSeed();
+  await executeRoleSeed();
+  await executeManufacturerSeed();
+  await executeUserSeed();
 }
 main()
   .then(async () => {
