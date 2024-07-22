@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function executeManufacturerSeed() {
+  await prisma.manufacturer.deleteMany();
+
   await prisma.manufacturer.createMany({
     data: [
       {
