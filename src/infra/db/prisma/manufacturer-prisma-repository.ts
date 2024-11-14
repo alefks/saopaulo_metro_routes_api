@@ -3,6 +3,7 @@ import {
   AddManufacturerRepository,
   LoadManufacturerByEmailRepository,
   LoadManufacturerByPhoneRepository,
+  LoadManufacturers,
 } from "../../../data/protocols/db/manufacturer";
 import { Manufacturer } from "../../../domain/models/manufacturer";
 
@@ -12,10 +13,13 @@ export class ManufacturerPrismaRepository
     LoadManufacturerByEmailRepository,
     LoadManufacturerByPhoneRepository
 {
+  private readonly prismaModel = "manufacturer";
+
   async add(data: AddManufacturerRepository.Params): Promise<Manufacturer> {
-    const result = await PrismaHelper.client.manufacturer.create({
-      data,
-    });
+    const result = await PrismaHelper.create<Manufacturer>(
+      this.prismaModel,
+      data
+    );
     return result;
   }
 
@@ -47,5 +51,15 @@ export class ManufacturerPrismaRepository
     } else {
       return manufacturer;
     }
+  }
+
+  async loadAll(): Promise<Manufacturer[] | LoadManufacturers.Message> {
+    const manufacturers = await PrismaHelper.findMany<Manufacturer>(
+      this.prismaModel
+    );
+    if (manufacturers.length === 0) {
+      return { message: "No manufacturers found." };
+    }
+    return manufacturers;
   }
 }
