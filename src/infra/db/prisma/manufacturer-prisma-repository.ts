@@ -62,4 +62,15 @@ export class ManufacturerPrismaRepository
     }
     return manufacturers;
   }
+
+  async deleteByUuid(uuid: string): Promise<{ message: string } | null> {
+    const deletedManufacturer = await PrismaHelper.deleteByUuid<Manufacturer>(
+      this.prismaModel,
+      uuid
+    );
+    if (!deletedManufacturer) {
+      return { message: "Manufacturer not found." };
+    }
+    return null;
+  }
 }
