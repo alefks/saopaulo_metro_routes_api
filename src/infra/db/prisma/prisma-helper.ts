@@ -35,13 +35,27 @@ export const PrismaHelper = {
     }) as Promise<T>;
   },
 
-  deleteByUuid: async <T>(prismaModel: string, uuid: string): Promise<T | null> => {
+  updateMany: async (
+    prismaModel: string,
+    where: object,
+    data: object
+  ): Promise<{ count: number }> => {
+    return PrismaHelper.client[prismaModel].updateMany({
+      where,
+      data,
+    });
+  },
+
+  deleteByUuid: async (
+    prismaModel: string,
+    uuid: string
+  ): Promise<{ count: number }> => {
     try {
-      return await PrismaHelper.client[prismaModel].delete({
+      return await PrismaHelper.client[prismaModel].deleteMany({
         where: { id: uuid },
       });
     } catch (error) {
-      return null;
+      return { count: 0 };
     }
   },
 };

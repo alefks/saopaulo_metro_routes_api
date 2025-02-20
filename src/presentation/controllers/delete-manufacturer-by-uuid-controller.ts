@@ -11,8 +11,7 @@ export class DeleteManufacturerByUuidController implements Controller {
     request: DeleteManufacturerByUuidController.Request
   ): Promise<HttpResponse> {
     try {
-      const manufacturerUuid = request.params.manufacturerUuid;
-      console.log(manufacturerUuid);
+      const manufacturerUuid = request.manufacturerUuid;
       const result = await this.deleteManufacturerByUuid.deleteByUuid(
         manufacturerUuid
       );
@@ -21,11 +20,10 @@ export class DeleteManufacturerByUuidController implements Controller {
         return noContent();
       }
 
-      if (result.message === "Manufacturer successfully deleted.") {
-        return ok(null);
+      if (result.message === "Manufacturer deleted successfully.") {
+        return ok({ message: result.message });
       }
     } catch (error) {
-      console.log(error);
       return serverError(error);
     }
   }
@@ -33,8 +31,6 @@ export class DeleteManufacturerByUuidController implements Controller {
 
 export namespace DeleteManufacturerByUuidController {
   export type Request = {
-    params: {
-      manufacturerUuid: string;
-    };
+    manufacturerUuid: string;
   };
 }

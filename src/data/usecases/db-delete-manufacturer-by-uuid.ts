@@ -14,10 +14,11 @@ export class DbDeleteManufacturerByUuid implements DeleteManufacturerByUuid {
         manufacturerUuid
       );
 
-    if (deletedManufacturer === null) {
-      return { message: "Manufacturer successfully deleted." };
-    } else {
-        return {message: "Manufacturer not found."}
+    console.log(deletedManufacturer);
+
+    if (deletedManufacturer.message === "Manufacturer deleted successfully.") {
+      return { message: "Manufacturer deleted successfully." };
     }
+    return { message: "Manufacturer not found." };
   }
 }
